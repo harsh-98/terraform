@@ -1,0 +1,11 @@
+[Unit]
+Description="Analytical service"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/third-eye
+ExecStart=go run ./cmd/main.go
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

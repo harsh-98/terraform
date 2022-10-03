@@ -1,0 +1,11 @@
+[Unit]
+Description="Charts and api server"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/charts_server
+ExecStart=go run ./cmd/main.go
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
