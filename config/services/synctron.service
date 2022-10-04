@@ -4,7 +4,7 @@ Description="Sync testnet service"
 [Service]
 User=debian
 WorkingDirectory=/home/debian/synctron
-ExecStart=go run ./cmd/main.go
+ExecStart=/home/debian/synctron/main
 Restart=always
 
 [Install]

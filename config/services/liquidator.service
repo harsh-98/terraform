@@ -4,7 +4,7 @@ Description="Charts and api server"
 [Service]
 User=debian
 WorkingDirectory=/home/debian/liquidator
-ExecStart=go run ./cmd/main.go
+ExecStart=/home/debian/liquidator/main
 Restart=always
 
 [Install]

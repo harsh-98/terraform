@@ -5,3 +5,8 @@ key_label = "sample"
 #     "web" = "firewall_webserver_http_https"
 # }
 image="linode/ubuntu22.04"
+
+
+db_username="username"
+db_password="password"
+database="gearbox"

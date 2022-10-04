@@ -7,16 +7,16 @@ sudo apt-get install -y postgresql # version 12
 ## in psql shell
 
 DB=$1
-USERNAME=$2
-PASSWORD=$3
-sudo su postgres
+DB_USERNAME=$2
+DB_PASSWORD=$3
+sudo su - postgres <<EOF 
 psql -c 'create database gearbox'
-psql -c  "create user $USERNAME with encrypted password '""${PASSWORD}""'"
-psql -c "grant all privileges on database $DB to $USERNAME"
+psql -c  "create user $DB_USERNAME with encrypted password '""${DB_PASSWORD}""'"
+psql -c "grant all privileges on database $DB to $DB_USERNAME"
+EOF
 
-HBA_FILE=`psql -t -P format=unaligned -c 'SHOW hba_file;'`
-sed "s|local   all             all                                     peer|local   all     $USERNAME                                     md5|g"  $HBA_FILE
-exit
+HBA_FILE=`sudo su - postgres -c "psql -t -P format=unaligned -c 'SHOW hba_file;'"`
+sudo sed -i "s|local   all             all                                     peer|local   all     $DB_USERNAME                                     md5|g"  $HBA_FILE
 sudo systemctl restart postgresql
 
 

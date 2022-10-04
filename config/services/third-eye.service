@@ -4,7 +4,7 @@ Description="Analytical service"
 [Service]
 User=debian
 WorkingDirectory=/home/debian/third-eye
-ExecStart=go run ./cmd/main.go
+ExecStart=/home/debian/third-eye/main
 Restart=always
 
 [Install]

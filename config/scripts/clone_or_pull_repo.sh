@@ -1,3 +1,4 @@
+#!/usr/bin/zsh
 
 GH_TOKEN=$1
 REPO_NAME=$2
@@ -8,10 +9,11 @@ else
 fi
 
 if [ ! -e $REPO_NAME ] ; then
-    git clone $REPO < y
-    cd liquidator; git remote remove origin
+    git clone $REPO
+    cd $REPO_NAME
+    git remote remove origin
 else 
-    cd liquidator
+    cd $REPO_NAME
     git remote add origin $REPO
     git pull origin master
     git remote remove origin

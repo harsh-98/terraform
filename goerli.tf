@@ -19,6 +19,10 @@ resource "linode_sshkey" "main_key" {
     ssh_key = chomp(file(var.key))
 }
 
+locals {
+    db_url = "postgres://${var.db_username}:${var.db_password}@localhost:5432/${var.database}"
+}
+
 resource "linode_instance" "goerli" {
     image = var.image
     label = "Goerli"
@@ -47,7 +51,11 @@ resource "linode_instance" "goerli" {
             "mkdir /home/debian/.ssh",
             "cp ~/.ssh/authorized_keys /home/debian/.ssh/authorized_keys",
             "chown -R debian:debian /home/debian/.ssh",
-            "echo 'debian     ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers"
+            "echo 'debian     ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers",
+            # migrate
+            "wget https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz",
+            "tar -xf migrate.linux-amd64.tar.gz -C /tmp",
+            "sudo mv /tmp/migrate /usr/bin/",
         ]
     }
 
@@ -66,37 +74,19 @@ resource "linode_instance" "goerli" {
 
     provisioner "remote-exec" {
         inline =[
-            "bash ~/install.sh",
-            "bash ~/scripts/go.sh 1.18.6",
+            "bash ~/config/scripts/install.sh",
+            "bash ~/config/scripts/go.sh 1.18.6",
+            "source ~/.zshrc",
             "ssh-keyscan github.com >> ~/.ssh/known_hosts",
+
+            #
+            "zsh ./config/scripts/psql.sh ${var.database} ${var.db_username} ${var.db_password}",
+            "sudo apt-get install migrate",
             # services on that server 
-            "mv ~/config/scripts/charts_server.service /etc/systemd/system",
-            "mv ~/config/scripts/third-eye.service /etc/systemd/system",
-            "mv ~/config/scripts/liquidator.service /etc/systemd/system",
-            "mv ~/config/scripts/synctron.service /etc/systemd/system",
-        ]
-    }
-}
-
-resource "null_resource" "psql" {
-    connection {
-            type     = "ssh"
-            user     = "debian"
-            private_key = file(var.pvt_key)
-            host     = linode_instance.goerli.ip_address
-            agent=true
-    }
-    # https://www.terraform.io/language/resources/provisioners/connection
-    provisioner "file" { # for transferring files from local to remote machine
-        source      = "./envs/goerli/.env.liquidator"
-        destination = "/home/debian/liquidator/.env"
-    }
-
-    # all inlines are ran as script on remote host in form of /tmp/random.sh
-    provisioner "remote-exec" {
-        inline =[
-            # "setopt share_history", # not needed
-            "zsh ./config/scripts/psql.sh ${var.db_database} ${var.db_username} ${var.password}",
+            "sudo cp ~/config/services/charts_server.service /etc/systemd/system",
+            "sudo cp ~/config/services/third-eye.service /etc/systemd/system",
+            "sudo cp ~/config/services/liquidator.service /etc/systemd/system",
+            "sudo cp ~/config/services/synctron.service /etc/systemd/system",
         ]
     }
 }
@@ -107,15 +97,14 @@ resource "null_resource" "nginx" {
             user     = "debian"
             private_key = file(var.pvt_key)
             host     = linode_instance.goerli.ip_address
-            agent=true
     }
     # all inlines are ran as script on remote host in form of /tmp/random.sh
     provisioner "remote-exec" {
         inline =[
             #
-            "sudo apt-get install nginx",
-            "sudo ~/config/nginx/goerli.gearbox-api.com.conf /etc/nginx/sites-available/",
-            "sudo ln -s /etc/nginx/sites-available/goerli.gearbox-api.com.conf /etc/nginx/sites-enabled/",
+            "sudo apt-get install -y nginx",
+            "sudo cp -r ~/config/nginx/goerli.gearbox-api.com.conf /etc/nginx/sites-available/",
+            "sudo ln -s /etc/nginx/sites-available/goerli.gearbox-api.com.conf /etc/nginx/sites-enabled/ -f",
             "sudo systemctl restart nginx"
         ]
     }
@@ -127,20 +116,25 @@ resource "null_resource" "liquidator" {
             user     = "debian"
             private_key = file(var.pvt_key)
             host     = linode_instance.goerli.ip_address
-            agent=true
     }
     # all inlines are ran as script on remote host in form of /tmp/random.sh
     provisioner "remote-exec" {
         inline =[
             # "setopt share_history", # not needed
             "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} liquidator",
-            "go build ./..."
+           "cd liquidator; go build ./cmd/main.go"
         ]
     }
     # https://www.terraform.io/language/resources/provisioners/connection
     provisioner "file" { # for transferring files from local to remote machine
         source      = "./envs/goerli/.env.liquidator"
         destination = "/home/debian/liquidator/.env"
+    }
+    provisioner "remote-exec" {
+        inline =[
+            "sudo systemctl enable liquidator.service",
+            "sudo systemctl restart liquidator",
+        ]
     }
 }
 
@@ -150,20 +144,26 @@ resource "null_resource" "third-eye" {
             user     = "debian"
             private_key = file(var.pvt_key)
             host     = linode_instance.goerli.ip_address
-            agent=true
     }
     # all inlines are ran as script on remote host in form of /tmp/random.sh
     provisioner "remote-exec" {
         inline =[
             # "setopt share_history", # not needed
             "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} third-eye",
-            "go build ./..."
+            "cd third-eye; go build ./cmd/main.go",
+            "migrate -path migrations -database \"${local.db_url}\" up",
         ]
     }
     # https://www.terraform.io/language/resources/provisioners/connection
     provisioner "file" { # for transferring files from local to remote machine
         source      = "./envs/goerli/.env.third-eye"
         destination = "/home/debian/third-eye/.env"
+    }
+        provisioner "remote-exec" {
+        inline =[
+            "sudo systemctl enable third-eye.service",
+            "sudo systemctl restart third-eye",
+        ]
     }
 }
 
@@ -173,20 +173,25 @@ resource "null_resource" "charts_server" {
             user     = "debian"
             private_key = file(var.pvt_key)
             host     = linode_instance.goerli.ip_address
-            agent=true
     }
     # all inlines are ran as script on remote host in form of /tmp/random.sh
     provisioner "remote-exec" {
         inline =[
             # "setopt share_history", # not needed
             "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} charts_server",
-            "go build ./..."
+            "cd charts_server; go build ./cmd/main.go"
         ]
     }
     # https://www.terraform.io/language/resources/provisioners/connection
     provisioner "file" { # for transferring files from local to remote machine
         source      = "./envs/goerli/.env.charts_server"
         destination = "/home/debian/charts_server/.env"
+    }
+    provisioner "remote-exec" {
+        inline =[
+            "sudo systemctl enable charts_server.service",
+            "sudo systemctl restart charts_server",
+        ]
     }
 }
 
@@ -196,19 +201,24 @@ resource "null_resource" "synctron" {
             user     = "debian"
             private_key = file(var.pvt_key)
             host     = linode_instance.goerli.ip_address
-            agent=true
     }
     # all inlines are ran as script on remote host in form of /tmp/random.sh
     provisioner "remote-exec" {
         inline =[
             # "setopt share_history", # not needed
             "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} synctron",
-            "go build ./..."
+            "cd synctron; go build ./cmd/main.go"
         ]
     }
     # https://www.terraform.io/language/resources/provisioners/connection
     provisioner "file" { # for transferring files from local to remote machine
         source      = "./envs/goerli/.env.synctron"
         destination = "/home/debian/synctron/.env"
+    }
+    provisioner "remote-exec" {
+        inline =[
+            "sudo systemctl enable synctron.service",
+            "sudo systemctl restart synctron",
+        ]
     }
 }
