@@ -1,0 +1,11 @@
+[Unit]
+Description="For monitoring and handling malicious activity"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/definder
+ExecStart=/home/debian/definder/main
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
