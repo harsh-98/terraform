@@ -1,0 +1,31 @@
+resource "null_resource" "definder" {
+    connection {
+            type     = "ssh"
+            user     = "debian"
+            private_key = file(var.pvt_key)
+            host     = var.ip_address
+            agent = true
+    }
+    # all inlines are ran as script on remote host in form of /tmp/random.sh
+    provisioner "remote-exec" {
+        inline =[
+            # "setopt share_history", # not needed
+            "git config --global url.'ssh://git@github.com/Gearbox-protocol/liquidator'.insteadOf 'https://github.com/Gearbox-protocol/liquidator'",
+            "export GOPRIVATE=github.com/Gearbox-protocol/liquidator",
+            "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} definder",
+            "cd definder; go build ./cmd/main.go"
+        ]
+    }
+    # https://www.terraform.io/language/resources/provisioners/connection
+    provisioner "file" { # for transferring files from local to remote machine
+        source      = "./envs/${var.network_label}/.env.definder"
+        destination = "/home/debian/definder/.env"
+    }
+    provisioner "remote-exec" {
+        inline =[
+            "sudo cp ~/config/services/definder.service /etc/systemd/system",
+            "sudo systemctl enable definder.service",
+            "sudo systemctl restart definder",
+        ]
+    }
+}

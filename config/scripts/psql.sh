@@ -9,14 +9,26 @@ sudo apt-get install -y postgresql # version 12
 DB=$1
 DB_USERNAME=$2
 DB_PASSWORD=$3
+# sudo su - postgres <<EOF 
+# psql -c 'create database $DB'
+# psql -c  "create user $DB_USERNAME with encrypted password '""${DB_PASSWORD}""'"
+# psql -c "grant all privileges on database $DB to $DB_USERNAME"
+# EOF
+
+# pg_database_owner in psql 15 so only owner has create rights
+# so other user will not have the permission to create objects i.e. tables in that schema.
+# therefore the previous create db and grant permission as two steps will not work.
 sudo su - postgres <<EOF 
-psql -c 'create database gearbox'
 psql -c  "create user $DB_USERNAME with encrypted password '""${DB_PASSWORD}""'"
-psql -c "grant all privileges on database $DB to $DB_USERNAME"
+psql -c 'create database $DB with owner $DB_USERNAME'
 EOF
+
+
 
 HBA_FILE=`sudo su - postgres -c "psql -t -P format=unaligned -c 'SHOW hba_file;'"`
 sudo sed -i "s|local   all             all                                     peer|local   all     $DB_USERNAME                                     md5|g"  $HBA_FILE
+CONFIG_FILE=`sudo su - postgres -c "psql -t -P format=unaligned -c 'SHOW config_file;'"`
+sudo sed -i "s|#listen_addresses = 'localhost'|listen_addresses = '0.0.0.0'|g"  $CONFIG_FILE
 sudo systemctl restart postgresql
 
 

@@ -7,7 +7,7 @@ if [ "$GH_TOKEN" = "NO_TOKEN" ] ; then
 else 
     REPO="https://oauth:$GH_TOKEN@github.com/Gearbox-protocol/$REPO_NAME.git"
 fi
-
+rm -rf $REPO_NAME
 if [ ! -e $REPO_NAME ] ; then
     git clone $REPO
     cd $REPO_NAME
