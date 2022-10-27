@@ -9,7 +9,6 @@ terraform {
 
 resource "linode_instance" "server" {
     image = var.image
-    label = var.network_label
     tags  = [var.network_label]
     group = var.network_label
     # https://registry.terraform.io/providers/linode/linode/latest/docs/resources/instance#argument-reference

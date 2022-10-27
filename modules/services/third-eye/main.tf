@@ -13,8 +13,8 @@ resource "null_resource" "nginx" {
             "zsh ./config/scripts/psql.sh ${var.database} ${var.db_username} ${var.db_password}",
             #
             "sudo apt-get install -y nginx",
-            "sudo cp -r ~/config/nginx/goerli.gearbox-api.com.conf /etc/nginx/sites-available/",
-            "sudo ln -s /etc/nginx/sites-available/goerli.gearbox-api.com.conf /etc/nginx/sites-enabled/ -f",
+            "sudo cp -r ~/config/nginx/${var.network_label}.gearbox-api.com.conf /etc/nginx/sites-available/",
+            "sudo ln -s /etc/nginx/sites-available/${var.network_label}.gearbox-api.com.conf /etc/nginx/sites-enabled/ -f",
             "sudo systemctl restart nginx"
         ]
     }

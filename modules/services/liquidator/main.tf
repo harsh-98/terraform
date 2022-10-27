@@ -21,8 +21,6 @@ resource "null_resource" "liquidator" {
     provisioner "remote-exec" {
         inline =[
             "sudo cp ~/config/services/liquidator.service /etc/systemd/system",
-            "sudo systemctl enable liquidator.service",
-            "sudo systemctl restart liquidator",
         ]
     }
 }

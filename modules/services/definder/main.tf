@@ -10,8 +10,8 @@ resource "null_resource" "definder" {
     provisioner "remote-exec" {
         inline =[
             # "setopt share_history", # not needed
-            "git config --global url.'ssh://git@github.com/Gearbox-protocol/liquidator'.insteadOf 'https://github.com/Gearbox-protocol/liquidator'",
-            "export GOPRIVATE=github.com/Gearbox-protocol/liquidator",
+            "git config --global url.'ssh://git@github.com/Gearbox-protocol/go-liquidator'.insteadOf 'https://github.com/Gearbox-protocol/go-liquidator'",
+            "export GOPRIVATE=github.com/Gearbox-protocol/go-liquidator",
             "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} definder",
             "cd definder; go build ./cmd/main.go"
         ]
