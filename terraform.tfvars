@@ -7,6 +7,4 @@ key_label = "sample"
 image="linode/ubuntu22.04"
 
 
-db_username="username"
-db_password="password"
 database="gearbox"
