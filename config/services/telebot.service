@@ -1,0 +1,11 @@
+[Unit]
+Description="Telegram bot for reading message from amqp queues and sending to telegram users"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/telegram-bot
+ExecStart=/home/debian/telegram-bot/main
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

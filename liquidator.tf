@@ -18,4 +18,6 @@ module "mainnet_liquidator" {
     gh_token = var.gh_token
     ip_address = module.liqserver.ip_address
     network_label = "mainnet"
+    # service_file = "p_liquidator"
+    service_file = "liquidator"
 }

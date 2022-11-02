@@ -64,4 +64,15 @@ module "goerli_liquidator" {
     gh_token = var.gh_token
     ip_address = module.goerli_server.ip_address
     network_label = "goerli"
+    service_file = "liquidator"
+}
+
+module "goerli_telebot" {
+    source = "./modules/services/telebot"
+
+    #
+    pvt_key = var.pvt_key_file
+    gh_token = var.gh_token
+    ip_address = module.goerli_server.ip_address
+    network_label = "goerli"
 }

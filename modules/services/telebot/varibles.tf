@@ -12,6 +12,3 @@ variable "ip_address" {
 variable "network_label" {
   description = "mainnet, goerli like network name"
 }
-variable "service_file" {
-  description = "file for starting the service"
-}

@@ -1,0 +1,11 @@
+[Unit]
+Description="Charts and api server"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/liquidator
+ExecStart=/home/debian/config/scripts/liquidator.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
