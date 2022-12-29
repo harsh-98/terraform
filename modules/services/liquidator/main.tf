@@ -15,7 +15,8 @@ resource "null_resource" "liquidator" {
     }
     # https://www.terraform.io/language/resources/provisioners/connection
     provisioner "file" { # for transferring files from local to remote machine
-        source      = "./envs/${var.network_label}/.env.liquidator"
+        # source      = "./envs/${var.network_label}/.env.liquidator"
+        source      = "./tmp_env/.env.liquidator"
         destination = "/home/debian/liquidator/.env"
     }
     provisioner "remote-exec" {
