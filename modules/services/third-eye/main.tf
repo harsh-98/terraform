@@ -3,7 +3,8 @@ resource "null_resource" "nginx" {
     connection {
             type     = "ssh"
             user     = "debian"
-            private_key = file(var.pvt_key)
+            agent       = true
+            #private_key = file(var.pvt_key)
             host     = var.ip_address
     }
     # all inlines are ran as script on remote host in form of /tmp/random.sh
@@ -28,7 +29,8 @@ resource "null_resource" "third-eye" {
     connection {
             type     = "ssh"
             user     = "debian"
-            private_key = file(var.pvt_key)
+            agent       = true
+            #private_key = file(var.pvt_key)
             host     = var.ip_address
     }
     # all inlines are ran as script on remote host in form of /tmp/random.sh

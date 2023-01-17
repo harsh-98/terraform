@@ -2,9 +2,9 @@ resource "null_resource" "definder" {
     connection {
             type     = "ssh"
             user     = "debian"
-            private_key = file(var.pvt_key)
+            agent       = true
+            #private_key = file(var.pvt_key)
             host     = var.ip_address
-            agent = true
     }
     # all inlines are ran as script on remote host in form of /tmp/random.sh
     provisioner "remote-exec" {

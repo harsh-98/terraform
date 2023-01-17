@@ -24,7 +24,8 @@ resource "linode_instance" "server" {
        connection {
         type     = "ssh"
         user     = "root"
-        private_key = file(var.pvt_key_file)
+        agent       = true
+        #private_key = file(var.pvt_key)
         host = linode_instance.server.ip_address
         }
         inline = [
@@ -46,7 +47,8 @@ resource "linode_instance" "server" {
     connection {
         type     = "ssh"
         user     = "debian"
-        private_key = file(var.pvt_key_file)
+        agent       = true
+        #private_key = file(var.pvt_key)
         host     = linode_instance.server.ip_address
     }
 
