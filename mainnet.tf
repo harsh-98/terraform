@@ -34,3 +34,13 @@ module "mainnet_charts_server" {
     ip_address = module.mainnet_server.ip_address
     network_label = "mainnet"
 }
+
+module "mainnet_dns_checker" {
+    source = "./modules/services/dns_checker"
+
+    #
+    pvt_key = var.pvt_key_file
+    gh_token = var.gh_token
+    ip_address = module.mainnet_server.ip_address
+    network_label = "mainnet"
+}

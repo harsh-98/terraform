@@ -1,0 +1,11 @@
+[Unit]
+Description="DNS checker"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/dns-checker
+ExecStart=/home/debian/dns-checker/main
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
