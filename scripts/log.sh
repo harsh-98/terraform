@@ -7,4 +7,9 @@ else
     TIME="--since \"$3\""
 fi
 
-ssh  debian@$IP  "journalctl  -u $2 $TIME"
+REMOTE_USER=debian
+if [ "$2" = "whois_proxy" ]; then
+    REMOTE_USER=root
+fi
+
+ssh  $REMOTE_USER@$IP  "journalctl  -u $2 $TIME"

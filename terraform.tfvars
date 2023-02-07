@@ -1,5 +1,5 @@
-pub_key_file = "~/.ssh/id_rsa.pub"
-pvt_key_file = "~/.ssh/id_rsa"
+pub_key_file = "~/.ssh/gearbox.pub"
+pvt_key_file = "~/.ssh/gearbox"
 key_label = "sample"
 # firewall_label_map = {
 #     "web" = "firewall_webserver_http_https"

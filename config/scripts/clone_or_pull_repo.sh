@@ -14,7 +14,7 @@ if [ ! -e $REPO_NAME ] ; then
 else 
     cd $REPO_NAME
     git remote add origin $REPO
-    git pull origin `git branch --show-current`:master -f
+    git pull origin `git branch --show-current`:`git branch --show-current` -f
     git remote remove origin
 fi
 #
