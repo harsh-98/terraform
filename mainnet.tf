@@ -44,3 +44,13 @@ module "mainnet_dns_checker" {
     ip_address = module.mainnet_server.ip_address
     network_label = "mainnet"
 }
+
+module "mainnet_aggregatex" {
+    source = "./modules/services/aggregatex"
+
+    #
+    pvt_key = var.pvt_key_file
+    gh_token = var.gh_token
+    ip_address = module.mainnet_server.ip_address
+    network_label = "mainnet"
+}

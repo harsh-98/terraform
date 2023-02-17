@@ -1,0 +1,11 @@
+[Unit]
+Description="Binance token status checker"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/aggregatex
+ExecStart=/home/debian/aggregatex/main
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
