@@ -1,3 +1,8 @@
+
+locals {
+    db_url = "postgres://${var.db_username}:${var.db_password}@localhost:5432/${var.aggregatex_db}"
+}
+
 resource "null_resource" "aggregatex" {
     connection {
             type     = "ssh"
@@ -9,9 +14,10 @@ resource "null_resource" "aggregatex" {
     # all inlines are ran as script on remote host in form of /tmp/random.sh
     provisioner "remote-exec" {
         inline =[
-            # "setopt share_history", # not needed
+            "zsh ./config/scripts/deploy_aggregatex_db.sh ${var.aggregatex_db} ${var.db_username}",
             "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} aggregatex",
-            "cd aggregatex; go build ./cmd/main.go"
+            "cd aggregatex; go build ./cmd/main.go",
+            "migrate -path migrations -database \"${local.db_url}\" up"
         ]
     }
     # https://www.terraform.io/language/resources/provisioners/connection

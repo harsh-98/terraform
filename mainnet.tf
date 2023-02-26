@@ -52,5 +52,8 @@ module "mainnet_aggregatex" {
     pvt_key = var.pvt_key_file
     gh_token = var.gh_token
     ip_address = module.mainnet_server.ip_address
+    db_username  =var.mainnet_db_username
+    db_password  =var.mainnet_db_password
+    aggregatex_db ="aggregatex"
     network_label = "mainnet"
 }

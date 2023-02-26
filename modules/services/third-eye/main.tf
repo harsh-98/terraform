@@ -47,7 +47,7 @@ resource "null_resource" "third-eye" {
         source      = "./envs/${var.network_label}/.env.third-eye"
         destination = "/home/debian/third-eye/.env"
     }
-        provisioner "remote-exec" {
+    provisioner "remote-exec" {
         inline =[
             "sudo cp ~/config/services/third-eye.service /etc/systemd/system",
             "sudo systemctl enable third-eye.service",
