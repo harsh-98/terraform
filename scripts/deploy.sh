@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e 
 
 NETWORK=$1
 SERVICE=$2

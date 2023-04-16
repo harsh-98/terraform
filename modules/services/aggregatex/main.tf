@@ -16,7 +16,7 @@ resource "null_resource" "aggregatex" {
         inline =[
             "zsh ./config/scripts/deploy_aggregatex_db.sh ${var.aggregatex_db} ${var.db_username}",
             "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} aggregatex",
-            "cd aggregatex; go build ./cmd/main.go",
+            "cd aggregatex; go build ./cmd/main.go; ./generate.sh",
             "migrate -path migrations -database \"${local.db_url}\" up"
         ]
     }
