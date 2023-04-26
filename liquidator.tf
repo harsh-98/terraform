@@ -1,7 +1,7 @@
 module "liqserver" {
     source = "./modules/services/server"
 
-    pub_key = linode_sshkey.main_key.ssh_key
+    pub_key = chomp(file(var.pub_key_file))
     root_pass = var.root_pass
     image = var.image
     pvt_key_file= var.pvt_key_file
