@@ -60,7 +60,7 @@ resource "linode_instance" "server" {
     provisioner "remote-exec" {
         inline =[
             "bash ~/config/scripts/install.sh",
-            "bash ~/config/scripts/go.sh 1.18.6",
+            "bash ~/config/scripts/go.sh 1.19.9",
             "source ~/.zshrc",
             "ssh-keyscan github.com >> ~/.ssh/known_hosts",
 

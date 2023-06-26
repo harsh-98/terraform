@@ -9,13 +9,14 @@ resource "null_resource" "deviator" {
     # all inlines are ran as script on remote host in form of /tmp/random.sh
     provisioner "remote-exec" {
         inline =[
+            "sudo apt-get install -y jq",
             "mkdir -p deviator; cd deviator",
-            "zsh ./config/scripts/get_release.sh ${var.gh_token} Gearbox-protocol/deviator"
+            "zsh $HOME/config/scripts/get_release.sh ${var.gh_token} Gearbox-protocol/deviator"
         ]
     }
     # https://www.terraform.io/language/resources/provisioners/connection
     provisioner "file" { # for transferring files from local to remote machine
-        source      = "./tmp_env/.env.deviator"
+        source      = "./envs/${var.network_label}/.env.deviator"
         destination = "/home/debian/deviator/.env"
     }
     provisioner "remote-exec" {

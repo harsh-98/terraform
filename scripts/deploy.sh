@@ -9,8 +9,18 @@ echo $TARGET
 
 source ./envs/enc_keys.sh $NETWORK $SERVICE
 
+if [ $SERVICE == "definder" ] || [ $SERVICE ==  "liquidator" ]  ; then
+    if [ $NETWORK == "mainnet" ]; then
+        echo "use fly"
+        exit 0
+    fi
+fi
+
 if [ $SERVICE == "definder" ] || [ $SERVICE ==  "liquidator" ] ; then
     mkdir -p tmp_env
+    if [ $SERVICE = "liquidator" ]; then
+        SERVICE=go-liquidator
+    fi  
     OLD_FILE="./envs/${NETWORK}/.env.$SERVICE"
     cp -r $OLD_FILE tmp_env/
     ./scripts/decrypter "$ENC_KEY" $ADDRESS >> "tmp_env/.env.$SERVICE"
@@ -23,13 +33,3 @@ terraform apply -var-file="./secrets.tfvars" -var-file="./terraform.tfvars" -tar
 if [ $SERVICE == "definder" ] || [ $SERVICE ==  "liquidator" ] ; then
     rm -rf ./tmp_env
 fi 
-
-# source `dirname $0`/address.sh $1 $2
-# if [ "$NETWORK" = "goerli" ]; then
-#     if [ "$SERVICE" = "liquidator" ]; then
-#     # if [ "$SERVICE" = "liquidator" ] ||  [ "$SERVICE" = "definder" ]; then
-#         echo "Enabling $SERVICE service"
-#         ssh debian@$IP  "sudo systemctl enable $SERVICE.service"
-#         ssh debian@$IP  "sudo systemctl restart $SERVICE"
-#     fi
-# fi

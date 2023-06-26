@@ -1,0 +1,12 @@
+[Unit]
+Description="Deviator for monitoring deviation btw chainlink/spot and taking action"
+
+[Service]
+User=debian
+Environment="RUST_BACKTRACE=1"
+WorkingDirectory=/home/debian/deviator
+ExecStart=/home/debian/deviator/deviator
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

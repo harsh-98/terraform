@@ -57,3 +57,11 @@ module "mainnet_aggregatex" {
     aggregatex_db ="aggregatex"
     network_label = "mainnet"
 }
+
+module "mainnet_deviator" {
+    source = "./modules/services/deviator"
+    pvt_key = var.pvt_key_file
+    gh_token = var.gh_token
+    ip_address = module.mainnet_server.ip_address
+    network_label = "mainnet"
+}

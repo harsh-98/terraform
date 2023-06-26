@@ -1,0 +1,40 @@
+# fly.toml app configuration file generated for definder on 2023-06-05T22:51:42+05:30
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "go-liquidator"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+primary_region = "ams"
+
+[env]
+# common
+  AMQP_ENABLE = "1"
+  APP_NAME = "TEST_Liquidator@H"
+# state engine
+  ADDRESS_PROVIDER = "0xcF64698AFF7E5f27A11dff868AF228653ba53be0"
+  DC_VERSION = 2
+  ROLLBACK_MAX_BLOCK = "5"
+  PORT=8080
+# application
+  PRIVATE_KEY_ADDRESS="0x7BD9c8161836b1F402233E80F55E3CaE0Fde4d87"
+  LIQ_SERVICE_ADDR="0x54788fAe186505dd16f07baE0091628BaD205C5E"
+  MULTICALL_MANAGER_PERMUTE="1"
+  FLASHBOT_RPC="https://rpc.flashbots.net"
+# fly
+  PRIMARY_REGION = "ams"
+
+[experimental]
+  auto_rollback = true
+
+[[services]]
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"

@@ -19,10 +19,3 @@ module "mainnet_definder" {
     ip_address = module.defserver.ip_address
     network_label = "mainnet"
 }
-module "mainnet_deviator" {
-    source = "./modules/services/deviator"
-    pvt_key = var.pvt_key_file
-    gh_token = var.gh_token
-    ip_address = module.defserver.ip_address
-    network_label = "mainnet"
-}
