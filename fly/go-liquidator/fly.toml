@@ -11,7 +11,7 @@ primary_region = "ams"
 [env]
 # common
   AMQP_ENABLE = "1"
-  APP_NAME = "TEST_Liquidator@H"
+  APP_NAME = "Liquidator@H"
 # state engine
   ADDRESS_PROVIDER = "0xcF64698AFF7E5f27A11dff868AF228653ba53be0"
   DC_VERSION = 2
@@ -32,6 +32,15 @@ primary_region = "ams"
   internal_port = 8080
   processes = ["app"]
   protocol = "tcp"
+  #
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
 
   [[services.tcp_checks]]
     grace_period = "1s"
