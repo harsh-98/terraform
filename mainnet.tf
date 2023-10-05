@@ -65,3 +65,16 @@ module "mainnet_deviator" {
     ip_address = module.mainnet_server.ip_address
     network_label = "mainnet"
 }
+module "mainnet_trading" {
+    source = "./modules/services/trading"
+    gh_token = var.gh_token
+    ip_address = module.mainnet_server.ip_address
+    network_label = "mainnet"
+}
+
+module "mainnet_app_status" {
+    source = "./modules/services/app_status"
+    gh_token = var.gh_token
+    ip_address = module.mainnet_server.ip_address
+    network_label = "mainnet"
+}

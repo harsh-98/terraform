@@ -33,3 +33,23 @@ fly scale vm shared-cpu-1x
 # fly ctl daemon
 fly agent stop
 LOG_LEVEL=debug fly agent daemon-start
+
+## Mount volume to macheine 
+```yaml
+[mounts]
+  source = "myapp_data"
+  destination = "/data"
+  processes= ["disk"] 
+  ```
+
+
+## v1
+```
+fly scale count 1
+fly vm status
+fly machines list #doens't work for v1
+fly suspend #only for v1
+fly resume #only for v1
+fly status # checking the status of the current application
+fly apps list# for checking the status of all applications
+```

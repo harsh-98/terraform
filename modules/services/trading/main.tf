@@ -1,4 +1,4 @@
-resource "null_resource" "charts_server" {
+resource "null_resource" "trading" {
     connection {
             type     = "ssh"
             user     = "debian"
@@ -11,7 +11,7 @@ resource "null_resource" "charts_server" {
         inline =[
             # "setopt share_history", # not needed
             "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} charts_server",
-            "cd charts_server; go build ./cmd/main.go"
+            "cd charts_server/trading; go build main.go"
         ]
     }
     # https://www.terraform.io/language/resources/provisioners/connection
@@ -25,9 +25,9 @@ resource "null_resource" "charts_server" {
     }
     provisioner "remote-exec" {
         inline =[
-            "sudo cp ~/config/services/charts_server.service /etc/systemd/system",
-            "sudo systemctl enable charts_server.service",
-            "sudo systemctl restart charts_server",
+            "sudo cp ~/config/services/trading.service /etc/systemd/system",
+            "sudo systemctl enable trading.service",
+            "sudo systemctl restart trading",
         ]
     }
 }

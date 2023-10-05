@@ -9,7 +9,7 @@ echo $TARGET
 
 source ./envs/enc_keys.sh $NETWORK $SERVICE
 
-if [ $SERVICE == "definder" ] || [ $SERVICE ==  "liquidator" ]  ; then
+if [ $SERVICE == "deviator" ] || [ $SERVICE == "definder" ] || [ $SERVICE ==  "liquidator" ]  ; then
     if [ $NETWORK == "mainnet" ]; then
         echo "use fly"
         exit 0

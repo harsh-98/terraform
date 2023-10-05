@@ -1,0 +1,11 @@
+[Unit]
+Description="Trading price application"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/charts_server/trading
+ExecStart=/home/debian/charts_server/trading/main
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

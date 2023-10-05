@@ -1,0 +1,11 @@
+[Unit]
+Description="App status"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/app_status
+ExecStart=/home/debian/app_status/main
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

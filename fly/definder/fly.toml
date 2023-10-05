@@ -1,45 +1,40 @@
-# fly.toml app configuration file generated for definder on 2023-06-05T22:51:42+05:30
+# fly.toml app configuration file generated for definder on 2023-08-23T11:49:09+04:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = "definder"
+primary_region = "ams"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
-primary_region = "ams"
-
-[env]
-# common
-  AMQP_ENABLE = "1"
-  APP_NAME = "Definder@H"
-# state engine
-  ADDRESS_PROVIDER = "0xcF64698AFF7E5f27A11dff868AF228653ba53be0"
-  DC_VERSION = 2
-  ROLLBACK_MAX_BLOCK = "5"
-  PORT=8080
-# application
-  PAUSER_MC_ADDRESS="0xD7b069517246edB58Ce670485b4931E0a86Ab6Ff"
-  PRIVATE_KEY_ADDRESS="0x65b384cEcb12527Da51d52f15b4140ED7FaD7308"
-  FLASHBOT_RELAY = ""
-  FLASHBOT_RPC = "https://rpc.flashbots.net"
-  RISK_CHECK_COOLDOWN_MIN = 1440
-  RISK_CHECK_ENABLE = "1"
-# fly
-  PRIMARY_REGION = "ams"
-
-
-[[mounts]]
-  source="definder"
-  destination="/app/data"
 
 [experimental]
   auto_rollback = true
 
+[env]
+  ADDRESS_PROVIDER = "0xcF64698AFF7E5f27A11dff868AF228653ba53be0"
+  AMQP_ENABLE = "1"
+  APP_NAME = "Definder@H"
+  DC_VERSION = "2"
+  FLASHBOT_RELAY = ""
+  FLASHBOT_RPC = "https://rpc.flashbots.net"
+  PAUSER_MC_ADDRESS = "0xD7b069517246edB58Ce670485b4931E0a86Ab6Ff"
+  PORT = "8080"
+  PRIMARY_REGION = "ams"
+  PRIVATE_KEY_ADDRESS = "0x65b384cEcb12527Da51d52f15b4140ED7FaD7308"
+  RISK_CHECK_COOLDOWN_MIN = "1440"
+  RISK_CHECK_ENABLE = "1"
+  ROLLBACK_MAX_BLOCK = "5"
+
+[http_service]
+  internal_port = 0
+  auto_stop_machines = false
+
 [[services]]
+  protocol = "tcp"
   internal_port = 8080
   processes = ["app"]
-  protocol = "tcp"
-  #
+
   [[services.ports]]
     port = 80
     handlers = ["http"]
@@ -48,8 +43,8 @@ primary_region = "ams"
   [[services.ports]]
     port = 443
     handlers = ["tls", "http"]
+
   [[services.tcp_checks]]
-    grace_period = "1s"
     interval = "15s"
-    restart_limit = 0
     timeout = "2s"
+    grace_period = "1s"

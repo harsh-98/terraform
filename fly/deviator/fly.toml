@@ -7,7 +7,7 @@ app = "deviator"
 primary_region = "ams"
 
 [env]
-  APP_NAME="deviator"
+  APP_NAME="TEST_deviator"
   AMQP_ENABLE=true
   ONE_INCH_ORACLE="0x07D91f5fb9Bf7798734C3f606dB065549F6893bb"
   ADDRESS_PROVIDER="0xcF64698AFF7E5f27A11dff868AF228653ba53be0"

@@ -28,6 +28,9 @@ primary_region = "ams"
 [experimental]
   auto_rollback = true
 
+[http_service]
+  auto_stop_machines = false
+
 [[services]]
   internal_port = 8080
   processes = ["app"]
