@@ -39,6 +39,7 @@ resource "linode_instance" "server" {
             # migrate
             "wget https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz",
             "tar -xf migrate.linux-amd64.tar.gz -C /tmp",
+            "sudo apt-get install -y sqlite3",
             "sudo mv /tmp/migrate /usr/bin/",
         ]
     }
@@ -60,7 +61,7 @@ resource "linode_instance" "server" {
     provisioner "remote-exec" {
         inline =[
             "bash ~/config/scripts/install.sh",
-            "bash ~/config/scripts/go.sh 1.19.9",
+            "bash ~/config/scripts/go.sh 1.21.6",
             "source ~/.zshrc",
             "ssh-keyscan github.com >> ~/.ssh/known_hosts",
 

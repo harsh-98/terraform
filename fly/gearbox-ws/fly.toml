@@ -11,14 +11,17 @@ kill_timeout = "5s"
 [experimental]
   auto_rollback = true
 
+#[deploy]
+  #strategy = "canary"
+
 [env]
 # state engine
-  # ADDRESS_PROVIDER = "0xcF64698AFF7E5f27A11dff868AF228653ba53be0"
-  ADDRESS_PROVIDER = "0x95f4cea53121b8A2Cb783C6BFB0915cEc44827D3"
+  #ADDRESS_PROVIDER = "0x95f4cea53121b8A2Cb783C6BFB0915cEc44827D3"
+  ADDRESS_PROVIDER = "0x9ea7b04da02a5373317d745c1571c84aad03321d"
   ROLLBACK_MAX_BLOCK = "5"
 # common
   AMQP_ENABLE = "1"
-  APP_NAME = "TEST_WsServer@H"
+  APP_NAME = "TEST_gearbox-ws@H"
 # application
   GB_VERSION_ALLOWED = "2"
   PORT = "8080"
@@ -30,26 +33,27 @@ kill_timeout = "5s"
   source="old_snaps"
   destination="/app/data"
   
-[[services]]
-  protocol = "tcp"
+[http_service]
   internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 0
   processes = ["app"]
 
-  [[services.ports]]
-    port = 80
-    handlers = ["http"]
-    force_https = true
-
-  [[services.ports]]
-    port = 443
-    handlers = ["tls", "http"]
-  [services.concurrency]
+[http_service.concurrency]
+    hard_limit = 10000
+    soft_limit = 7500
     type = "connections"
-    hard_limit = 25
-    soft_limit = 20
 
-  [[services.tcp_checks]]
-    interval = "15s"
-    timeout = "2s"
-    grace_period = "1s"
-    restart_limit = 0
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  timeout = "5s"
+  path = "/metrics"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512

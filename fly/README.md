@@ -5,6 +5,7 @@ fly ssh console -C 'cat data/returned_accounts.json'
 fly volumes list # shows id of attahed vm
 fly scale show
 # creating volume
+>>NOTE https://fly.io/docs/apps/volume-storage/
 fly volumes create definder -s 1
 
 # deploy future apps on v2
@@ -22,9 +23,11 @@ fly image show
 
 
 # copy files from volume
-flyctl ssh issue -d agent
+flyctl ssh issue --agent
+cd the application
 fly proxy 10022:22
 scp -P 10022 root@localhost:/app/activities.db .
+scp -P 10022 root@localhost:/app/db/referral.db .
 
 # fly scale to more compute 
 fly scale vm shared-cpu-1x
@@ -42,6 +45,17 @@ LOG_LEVEL=debug fly agent daemon-start
   processes= ["disk"] 
   ```
 
+## Misc
+
+-- on concurrency: https://community.fly.io/t/problem-increasing-apps-connections-hard-limit/13913/3
+[http_service.concurrency]
+    hard_limit = 10000
+    soft_limit = 7500
+    type = "connections"
+
+-- https://fly.io/docs/reference/configuration/
+-- https://fly.io/docs/reference/services/
+-- https://fly.io/docs/reference/private-networking/#flycast-private-load-balancing
 
 ## v1
 ```

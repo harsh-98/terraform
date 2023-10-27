@@ -2,13 +2,15 @@
 
 set -e 
 
-FLY_APP=go-liquidator
+FLY_APP=liquidator-v3
 FILE_PATH=$(realpath `dirname $0`)
 
 cd $FILE_PATH
 
+set +e
 IMAGE=`fly image show | ggrep  -oP "\K(deployment-\w+)"`
 IMAGE="registry.fly.io/"$FLY_APP":"$IMAGE
+set -e
 
 cd ../../../$FLY_APP
 #

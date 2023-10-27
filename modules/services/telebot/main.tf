@@ -1,3 +1,7 @@
+locals {
+    folder = "${var.network_label}-telegram-bot"
+    service = "${var.network_label}-telebot"
+}
 resource "null_resource" "telebot" {
     connection {
             type     = "ssh"
@@ -10,20 +14,21 @@ resource "null_resource" "telebot" {
     provisioner "remote-exec" {
         inline =[
             # "setopt share_history", # not needed
-            "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} telegram-bot",
-            "cd telegram-bot; go build ./cmd/main.go"
+            "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} telegram-bot /${var.network_label}",
+            "cd ${local.folder}; go build ./cmd/main.go"
         ]
     }
     # https://www.terraform.io/language/resources/provisioners/connection
     provisioner "file" { # for transferring files from local to remote machine
         source      = "./envs/${var.network_label}/.env.telebot"
-        destination = "/home/debian/telegram-bot/.env"
+        destination = "/home/debian/${local.folder}/.env"
     }
     provisioner "remote-exec" {
         inline =[
-            "sudo cp ~/config/services/telebot.service /etc/systemd/system",
-            "sudo systemctl enable telebot.service",
-            "sudo systemctl restart telebot",
+            "sudo cp ~/config/services/telebot.service /etc/systemd/system/${local.service}.service",
+            "sudo sed -i 's|telegram-bot|${local.folder}|g' /etc/systemd/system/${local.service}.service",
+            "sudo systemctl enable ${local.service}.service",
+            "sudo systemctl restart ${local.service}",
         ]
     }
 }

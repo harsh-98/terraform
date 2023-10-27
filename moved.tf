@@ -46,9 +46,3 @@ terraform {
 provider "linode" {
   token = var.linode_token
 }
-
-# resource "ssh_key" "main_key" {
-#     label = var.key_label
-#     # chomp removes newline character at the end of line
-#     ssh_key = chomp(file(var.pub_key_file))
-# }

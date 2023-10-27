@@ -1,0 +1,11 @@
+[Unit]
+Description="Trading account details ws"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/go-liquidator/cmd/web_server
+ExecStart=/home/debian/go-liquidator/cmd/web_server/main
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -11,7 +11,7 @@ primary_region = "ams"
 [env]
 # common
   AMQP_ENABLE = "1"
-  APP_NAME = "Liquidator@H"
+  APP_NAME = "TEST_Liquidatorv2@H"
 # state engine
   ADDRESS_PROVIDER = "0xcF64698AFF7E5f27A11dff868AF228653ba53be0"
   DC_VERSION = 2
@@ -28,25 +28,23 @@ primary_region = "ams"
 [experimental]
   auto_rollback = true
 
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512
+
 [http_service]
-  auto_stop_machines = false
-
-[[services]]
   internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 0
   processes = ["app"]
-  protocol = "tcp"
-  #
-  [[services.ports]]
-    port = 80
-    handlers = ["http"]
-    force_https = true
 
-  [[services.ports]]
-    port = 443
-    handlers = ["tls", "http"]
-
-  [[services.tcp_checks]]
-    grace_period = "1s"
-    interval = "15s"
-    restart_limit = 0
-    timeout = "2s"
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  timeout = "5s"
+  path = "/metrics"

@@ -1,10 +1,20 @@
 pub_key_file = "~/.ssh/gearbox.pub"
 pvt_key_file = "~/.ssh/gearbox"
-key_label = "sample"
 # firewall_label_map = {
 #     "web" = "firewall_webserver_http_https"
 # }
 image="linode/ubuntu22.04"
 
 
-database="gearbox"
+testnet_db_username="debian"
+testnet_db_password="123Sample"
+
+anvil_database="tmp_anvil"
+arbtest_database="tmp_arbtest"
+opttest_database="tmp_opttest"
+
+
+#
+anvil_server_ip="84.247.174.187"
+arbtest_server_ip="194.163.166.173"
+opttest_server_ip="194.163.166.173"

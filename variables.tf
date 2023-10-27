@@ -10,9 +10,6 @@ variable "pvt_key_file" {
   description = "Private SSH Key's path."
 }
 
-variable "key_label" {
-  description = "New SSH key label."
-}
 
 
 variable "image" {
@@ -28,9 +25,7 @@ variable "gh_token" {
   description = ""
 }
 
-variable "root_pass" {
-  description = "Your Linode's root user's password."
-}
+
 
 variable "linodes" {
   description = "List of Linode ids to which the rule sets will be applied"
@@ -40,25 +35,71 @@ variable "linodes" {
 
 
 # for third-eye
-variable "database" {
-  description = "username of db"
+variable "anvil_server_ip" {
+  description = "anvil server"
+}
+variable "anvil_database" {
+  description = "name of db"
+}
+variable "arbtest_server_ip" {
+  description = "anvil arbitrum server"
+}
+variable "arbtest_database" {
+  description = "name of db"
+}
+variable "opttest_server_ip" {
+  description = "opttest arbitrum server"
+}
+variable "opttest_database" {
+  description = "name of db"
 }
 
-variable "db_username" {
+
+
+
+variable "testnet_db_username" {
   description = "username of db"
 }
-variable "db_password" {
+variable "testnet_db_password" {
   description = "db password"
 }
 
-variable "mainnet_db_username" {
-  description = "mainnet username of db"
+# mainnet
+variable "postgres_db_username" {
+  description = "username of db"
 }
-variable "mainnet_db_password" {
-  description = "mainnet db password"
+variable "postgres_db_password" {
+  description = "db password"
+}
+variable "postgres_host" {
+  description = "mainnet host"
+}
+
+variable "mainnet_database" {
+  description = "mainnet database"
+}
+variable "mainnet_server_ip" {
+  description = "arbitrum server ip"
+}
+variable "arbitrum_database" {
+  description = "arbitrum database"
+}
+variable "arbitrum_server_ip" {
+  description = "arbitrum server ip"
+}
+variable "optimism_database" {
+  description = "arbitrum database"
+}
+variable "optimism_server_ip" {
+  description = "arbitrum server ip"
 }
 
 
+
+
+variable "root_pass" {
+  description = "Your Linode's root user's password."
+}
 
 # https://registry.terraform.io/providers/linode/linode/latest/docs
 # create token from https://cloud.linode.com/profile/tokens

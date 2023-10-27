@@ -9,11 +9,13 @@ echo $TARGET
 
 source ./envs/enc_keys.sh $NETWORK $SERVICE
 
-if [ $SERVICE == "deviator" ] || [ $SERVICE == "definder" ] || [ $SERVICE ==  "liquidator" ]  ; then
-    if [ $NETWORK == "mainnet" ]; then
-        echo "use fly"
+
+if [ $NETWORK == "mainnet" ]; then
+    if  [ $SERVICE == "third-eye" ]; then
+        echo ""
+    else
         exit 0
-    fi
+    fi 
 fi
 
 if [ $SERVICE == "definder" ] || [ $SERVICE ==  "liquidator" ] ; then
@@ -26,8 +28,12 @@ if [ $SERVICE == "definder" ] || [ $SERVICE ==  "liquidator" ] ; then
     ./scripts/decrypter "$ENC_KEY" $ADDRESS >> "tmp_env/.env.$SERVICE"
 fi 
 
-terraform destroy -var-file="./secrets.tfvars" -var-file="./terraform.tfvars" -target=$TARGET  -auto-approve
-terraform apply -var-file="./secrets.tfvars" -var-file="./terraform.tfvars" -target=$TARGET
+terraform destroy -var-file="./secrets.tfvars" -var-file="./terraform.tfvars" -target=$TARGET -auto-approve
+if [ "$3" = "approve" ] ; then 
+    terraform apply -var-file="./secrets.tfvars" -var-file="./terraform.tfvars" -target=$TARGET -auto-approve
+else 
+    terraform apply -var-file="./secrets.tfvars" -var-file="./terraform.tfvars" -target=$TARGET
+fi
 
 
 if [ $SERVICE == "definder" ] || [ $SERVICE ==  "liquidator" ] ; then

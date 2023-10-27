@@ -3,7 +3,7 @@
 set -e 
 
 FLY_APP=gearbox-ws
-LOCAL_FOLDER=go-liquidator
+LOCAL_FOLDER=liquidator-v3
 FILE_PATH=$(realpath `dirname $0`)
 cd $FILE_PATH/../../../$LOCAL_FOLDER
 #

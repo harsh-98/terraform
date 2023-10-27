@@ -1,0 +1,35 @@
+# fly.toml app configuration file generated for liquidator-v3 on 2023-12-18T18:03:31+04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "liquidator-v3"
+primary_region = "ams"
+
+[env]
+ROLLBACK_MAX_BLOCK = "5"
+FLASHBOT_RPC = "https://rpc.flashbots.net/?builder=f1b.io&builder=rsync&builder=beaverbuild.org&builder=builder0x69&builder=Titan&builder=EigenPhi&builder=boba-builder&builder=Gambit+Labs&builder=payload&builder=Loki&builder=BuildAI&builder=JetBuilder&builder=tbuilder&builder=penguinbuild&hint=default_logs"
+AMQP_ENABLE = "1"
+APP_NAME = "TEST_LIQUIDATORV3@H"
+ONE_INCH_BASE_API = "https://api.1inch.io/v5.0/1"
+ADDRESS_PROVIDER = "0x9ea7b04da02a5373317d745c1571c84aad03321d"
+PORT = "8080"
+[http_service]
+internal_port = 8080
+force_https = true
+auto_stop_machines = false
+auto_start_machines = true
+min_machines_running = 0
+processes = ["app"]
+
+[[vm]]
+cpu_kind = "shared"
+cpus = 1
+memory_mb = 256
+
+[[http_service.checks]]
+grace_period = "10s"
+interval = "30s"
+method = "GET"
+timeout = "5s"
+path = "/metrics"

@@ -1,0 +1,11 @@
+[Unit]
+Description="Gpoint bot"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/gpointbot
+ExecStart=/home/debian/gpointbot/main
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

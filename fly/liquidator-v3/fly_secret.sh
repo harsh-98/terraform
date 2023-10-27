@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FLY_APP=go-liquidator
+FLY_APP=liquidator-v3
 
 export TERRAFORM_DIR="`dirname $0`/../.."
 
@@ -11,4 +11,4 @@ $TERRAFORM_DIR/scripts/decrypter $ENC_KEY $ADDRESS > /tmp/prv
 source /tmp/prv
 rm -rf /tmp/prv
 
-flyctl secrets -a  $FLY_APP set "ETH_PROVIDER=$ETH_PROVIDER" "WSS_PROVIDER=$WSS_PROVIDER" "CLOUDAMQP_URL=$CLOUDAMQP_URL" "RISK_ENDPOINT=$RISK_ENDPOINT" "RISK_SECRET=$RISK_SECRET" "PRIVATE_KEY=$PRIVATE_KEY"
+flyctl secrets -a  $FLY_APP set "ETH_PROVIDER=$ETH_PROVIDER" "WSS_PROVIDER=$WSS_PROVIDER" "CLOUDAMQP_URL=$CLOUDAMQP_URL" "PRIVATE_KEY=$PRIVATE_KEY"

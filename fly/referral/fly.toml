@@ -1,0 +1,36 @@
+# fly.toml app configuration file generated for referral-gen on 2023-10-27T20:08:51+07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "referral-gen"
+primary_region = "waw"
+
+[experimental]
+auto_rollback = true
+
+[mounts]
+source = "referral_vol"
+destination = "/app/db"
+
+[env]
+# common
+AMQP_ENABLE = "1"
+APP_NAME = "TEST_Referral@H"
+CLOUDAMQP_URL = "amqps://kwtgjsbt:KYzxLlF0U5oN_EXqoZIVDf-mByiye6BU@moose.rmq.cloudamqp.com/kwtgjsbt"
+#
+SQLITE_URL = "db/local.db"
+# BOT_URL="https://gpoinbot.fly.dev/"
+
+[http_service]
+internal_port = 8080
+force_https = true
+auto_stop_machines = false
+auto_start_machines = true
+min_machines_running = 0
+processes = ["app"]
+
+[[vm]]
+cpu_kind = "shared"
+cpus = 1
+memory_mb = 256

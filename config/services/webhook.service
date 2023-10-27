@@ -1,0 +1,11 @@
+[Unit]
+Description="Webhook reset"
+
+[Service]
+User=debian
+ExecStart=/home/debian/app_status/cmd/webhook/main
+WorkingDirectory=/home/debian/app_status/cmd/webhook
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

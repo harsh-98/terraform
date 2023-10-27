@@ -1,1 +1,0 @@
-flyctl secrets -a gearbox-logger set  "HONEYCOMB_API_KEY=1PAhp9815xxbd8l6smjMlA" "HONEYCOMB_DATASET=logs"

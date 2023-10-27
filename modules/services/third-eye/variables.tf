@@ -18,10 +18,16 @@ variable "network_label" {
 variable "db_username" {
   description = "username of db"
 }
+variable "app_name" {
+  description = "app name"
+}
 
 variable "database" {
   description = "username of db"
 }
 variable "db_password" {
   description = "db password"
+}
+variable "host" {
+  description = "host name"
 }

@@ -1,0 +1,33 @@
+# fly.toml app configuration file generated for gearbox-logger on 2024-01-24T11:05:03+04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "gearbox-logger"
+primary_region = "ams"
+
+#[build]
+  #image = "ghcr.io/superfly/fly-log-shipper:latest"
+
+#fly secrets set HTTP_URL="https:/testnet.gearbox.foundation/logger/add" 
+#fly secrets set HTTP_TOKEN="storeallthelogs"
+
+[http_service]
+  internal_port = 8686
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+#[[services]]
+  #http_checks = []
+  #processes = ["app"]
+  #internal_port = 8686
+  #auto_stop_machines = true
+  #auto_start_machines = true

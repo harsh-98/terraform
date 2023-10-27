@@ -10,5 +10,5 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
 Install the https certificates and update the nginx website config:
 ```
-sudo certbot --nginx -d goerli.gearbox-api.com
+sudo certbot --nginx -d arbitrum.gearbox.foundation
 ```
