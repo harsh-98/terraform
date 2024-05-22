@@ -6,6 +6,7 @@ User=debian
 WorkingDirectory=/home/debian/go-liquidator/cmd/web_server
 ExecStart=/home/debian/go-liquidator/cmd/web_server/main
 Restart=always
+RestartSec=3 
 
 [Install]
 WantedBy=multi-user.target

@@ -1,6 +1,6 @@
 locals {
     folder = "${var.network_label}-gpointbot"
-    db_url = "postgres://${var.db_username}:${var.db_password}@localhost:5432/${var.db_name}?sslmode=disable"
+    # db_url = "postgres://${var.db_username}:${var.db_password}@localhost:5432/${var.db_name}?sslmode=disable"
 }
 resource "null_resource" "gpointbot" {
     connection {
@@ -16,7 +16,7 @@ resource "null_resource" "gpointbot" {
             # "setopt share_history", # not needed
             "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} gpointbot /${var.network_label}",
             "cd ${local.folder}; go build cmd/main.go",
-            "migrate -path migrations -database '${local.db_url}' up",
+            # "migrate -path migrations -database '${local.db_url}' up",
         ]
     }
     # https://www.terraform.io/language/resources/provisioners/connection

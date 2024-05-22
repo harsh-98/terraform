@@ -6,6 +6,7 @@ User=debian
 WorkingDirectory=/home/debian/charts_server/trading
 ExecStart=/home/debian/charts_server/trading/main
 Restart=always
+RestartSec=3 
 
 [Install]
 WantedBy=multi-user.target

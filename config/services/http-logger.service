@@ -1,0 +1,12 @@
+[Unit]
+Description="http logger"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/http-logger
+ExecStart=/home/debian/http-logger/main
+Restart=always
+RestartSec=3 
+
+[Install]
+WantedBy=multi-user.target

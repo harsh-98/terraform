@@ -11,7 +11,7 @@ ENV = "production"
 DAO_ADDRESS = "0x7b065Fcb0760dF0CEA8CFd144e08554F3CeA73D1"
 AMQP_ENABLE = "1"
 CACHING_SEC = "120"
-APP_NAME = "TEST_charts_server"
+APP_NAME = "charts_server"
 
 [http_service]
 internal_port = 8080

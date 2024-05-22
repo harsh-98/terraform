@@ -12,9 +12,17 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 3 {
+		log.Fatal("Usage: go run main.go <private_key> <address>")
+	}
 	fmt.Fprintln(os.Stderr, "Give passwords:")
 	password, err := gopass.GetPasswd()
 	log.CheckFatal(err)
+	if len(os.Args) == 4 && "encrypt" == os.Args[3] {
+		prvKey := utils.Encrypt(os.Args[1], string(password))
+		fmt.Println(prvKey)
+		return
+	}
 	prvKey := utils.Decrypt(os.Args[1], password)
 	wallet := core.GetWallet(prvKey)
 	if wallet.Address != common.HexToAddress(os.Args[2]) {

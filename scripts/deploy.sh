@@ -11,7 +11,7 @@ source ./envs/enc_keys.sh $NETWORK $SERVICE
 
 
 if [ $NETWORK == "mainnet" ]; then
-    if  [ $SERVICE == "third-eye" ]; then
+    if  [ $SERVICE == "third-eye" ] || [ $SERVICE == "app_status" ]; then
         echo ""
     else
         exit 0

@@ -8,13 +8,15 @@ primary_region = "ams"
 
 [env]
 APP_NAME = "TEST_gpointbot"
-AMQP_ENABLE = 1
+AMQP_ENABLE = "1"
 ADDRESS_PROVIDER = "0x9ea7b04da02a5373317d745c1571c84aad03321d"
 PORT = "8080"
+NETWORKS = "ARBITRUM"
+# NETWORKS = "MAINNET,ARBITRUM"
 
-[mounts]
-source = "gpointbot_vol"
-destination = "/app/db"
+# [mounts]
+# source = "gpointbot_vol"
+# destination = "/app/db"
 
 
 [[vm]]

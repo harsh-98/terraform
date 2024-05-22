@@ -1,5 +1,6 @@
 locals {
     folder = "${var.network_label}-app_status"
+    webhookCommand = local.folder== "anvil" ? "sudo sed -i 's|app_status|${local.folder}|g' /etc/systemd/system/${local.folder}.service": "ls"
 }
 resource "null_resource" "app_status" {
     connection {
@@ -29,7 +30,8 @@ resource "null_resource" "app_status" {
     provisioner "remote-exec" {
         inline =[
             "sudo cp ~/config/services/app_status.service /etc/systemd/system/${local.folder}.service",
-            "sudo sed -i 's|app_status|${local.folder}|g' /etc/systemd/system/${local.folder}.service",
+          "${local.webhookCommand}",
+           "sudo sed -i 's|app_status|${local.folder}|g' /etc/systemd/system/${local.folder}.service",
             "sudo systemctl enable ${local.folder}.service",
             "sudo systemctl restart ${local.folder}",
         ]

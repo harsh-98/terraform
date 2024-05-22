@@ -29,6 +29,7 @@ User=root
 WorkingDirectory=/root/dns-checker
 ExecStart=/root/dns-checker/main
 Restart=always
+RestartSec=3 
 
 [Install]
 WantedBy=multi-user.target

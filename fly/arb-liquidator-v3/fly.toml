@@ -3,16 +3,15 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "liquidator-v3"
+app = "arb-liquidator-v3"
 primary_region = "ams"
 
 [env]
-ROLLBACK_MAX_BLOCK = "5"
-FLASHBOT_RPC = "https://rpc.flashbots.net/?builder=f1b.io&builder=rsync&builder=beaverbuild.org&builder=builder0x69&builder=Titan&builder=EigenPhi&builder=boba-builder&builder=Gambit+Labs&builder=payload&builder=Loki&builder=BuildAI&builder=JetBuilder&builder=tbuilder&builder=penguinbuild&hint=default_logs"
-AMQP_ENABLE = "0"
-APP_NAME = "TEST_LIQUIDATORV3@H"
+ROLLBACK_MAX_BLOCK = "10"
+# FLASHBOT_RPC = "https://rpc.flashbots.net/?builder=f1b.io&builder=rsync&builder=beaverbuild.org&builder=builder0x69&builder=Titan&builder=EigenPhi&builder=boba-builder&builder=Gambit+Labs&builder=payload&builder=Loki&builder=BuildAI&builder=JetBuilder&builder=tbuilder&builder=penguinbuild&hint=default_logs"
+AMQP_ENABLE = "1"
+APP_NAME = "TEST_ARB_LIQUIDATORV3@H"
 ONE_INCH_BASE_API = "https://api.1inch.io/v5.0/1"
-ADDRESS_PROVIDER = "0x9ea7b04da02a5373317d745c1571c84aad03321d"
 PORT = "8080"
 [http_service]
 internal_port = 8080

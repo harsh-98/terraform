@@ -6,6 +6,7 @@ User=debian
 ExecStart=/home/debian/app_status/cmd/webhook/main
 WorkingDirectory=/home/debian/app_status/cmd/webhook
 Restart=always
+RestartSec=3 
 
 [Install]
 WantedBy=multi-user.target

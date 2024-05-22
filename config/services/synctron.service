@@ -6,6 +6,7 @@ User=debian
 WorkingDirectory=/home/debian/synctron
 ExecStart=/home/debian/synctron/main
 Restart=always
+RestartSec=3 
 
 [Install]
 WantedBy=multi-user.target

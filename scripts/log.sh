@@ -6,7 +6,7 @@ if [ "$2" = "whois_proxy" ]; then
     REMOTE_USER=root
 fi
 
-if [ "$1" = "mainnet" ] && [ "$2" != "third-eye" ]; then
+if [ "$1" = "mainnet" ] && [ "$2" != "third-eye" ] && [ "$2" != "app_status" ] ; then
     REGION=$4
     if [ "$REGION" = "" ]; then
         REGION="ams"
