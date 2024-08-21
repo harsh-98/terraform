@@ -30,7 +30,7 @@ resource "null_resource" "gpointbot" {
             "sudo sed -i 's|gpointbot|${local.folder}|g' /etc/systemd/system/${local.folder}.service",
             "sudo systemctl enable ${local.folder}",
             "sudo systemctl stop ${local.folder}",
-            "psql -U debian -d ${var.db_name} -c 'drop table last_snaps ; drop table user_points ; drop table events;'",
+            # "psql -U debian -d ${var.db_name} -c 'drop table last_snaps ; drop table user_points ; drop table events;'",
             "sudo systemctl restart ${local.folder}",
         ]
     }

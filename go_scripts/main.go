@@ -24,9 +24,12 @@ func main() {
 		return
 	}
 	prvKey := utils.Decrypt(os.Args[1], password)
+	if len(prvKey) == 66 {
+		prvKey = prvKey[2:]
+	}
 	wallet := core.GetWallet(prvKey)
 	if wallet.Address != common.HexToAddress(os.Args[2]) {
-		log.Fatal("Wrong prvKey", os.Args[1], password)
+		log.Fatal("Wrong prvKey", os.Args[1], string(password),wallet.Address)
 	}
 	fmt.Println(fmt.Sprintf("PRIVATE_KEY=\"%s\"", prvKey))
 }

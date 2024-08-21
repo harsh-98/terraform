@@ -67,3 +67,9 @@ fly resume #only for v1
 fly status # checking the status of the current application
 fly apps list# for checking the status of all applications
 ```
+
+## scale individual machines
+```
+fly machine update 185e643f535628 --vm-memory 2048
+https://fly.io/docs/postgres/managing/scaling/
+``` 

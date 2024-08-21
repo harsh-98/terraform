@@ -29,9 +29,9 @@ kill_timeout = "5s"
 # fly
   PRIMARY_REGION = "ams"
 
-[[mounts]]
-  source="old_snaps"
-  destination="/app/data"
+# [[mounts]]
+#   source="old_snaps"
+#   destination="/app/data"
   
 [http_service]
   internal_port = 8080

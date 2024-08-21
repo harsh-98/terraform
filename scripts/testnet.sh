@@ -12,11 +12,11 @@ NETWORK=$1
 ./scripts/deploy.sh $NETWORK charts_server approve
 ./scripts/deploy.sh $NETWORK gearbox-ws approve
 
-if [ "$NETWORK" = "ANVIL" ] || [ "$NETWORK" = "ARBTEST" ] || [ "$NETWORK" = "OPTTEST" ]; then
+if [ "$NETWORK" = "anvil" ] || [ "$NETWORK" = "arbtest" ] || [ "$NETWORK" = "opttest" ]; then
     ./scripts/deploy.sh $NETWORK webhook approve
 fi
 
-if [ -f "$DIRNAME/../.envs/$NETWORK/.env.gpointbot" ]; then
+if [ "$NETWORK" = "anvil" ]; then
     ./scripts/deploy.sh $NETWORK gpointbot approve
     ./scripts/deploy.sh $NETWORK trading_price approve
 fi

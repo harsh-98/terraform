@@ -36,3 +36,6 @@ sudo systemctl restart postgresql
 # for error: invalid command \N
 # https://stackoverflow.com/questions/20427689/psql-invalid-command-n-while-restore-sql/42161524#:~:text=Postgres%20uses%20%22%5CN%22%20as,message%20is%20a%20false%20alarm.
 #psql -v ON_ERROR_STOP=1
+
+
+

@@ -8,8 +8,8 @@ primary_region = "ams"
 
 [env]
 ROLLBACK_MAX_BLOCK = "5"
-FLASHBOT_RPC = "https://rpc.flashbots.net/?builder=f1b.io&builder=rsync&builder=beaverbuild.org&builder=builder0x69&builder=Titan&builder=EigenPhi&builder=boba-builder&builder=Gambit+Labs&builder=payload&builder=Loki&builder=BuildAI&builder=JetBuilder&builder=tbuilder&builder=penguinbuild&hint=default_logs"
-AMQP_ENABLE = "0"
+FLASHBOT_RPC = "https://rpc.flashbots.net/?hint=hash"
+AMQP_ENABLE = "1"
 APP_NAME = "TEST_LIQUIDATORV3@H"
 ONE_INCH_BASE_API = "https://api.1inch.io/v5.0/1"
 ADDRESS_PROVIDER = "0x9ea7b04da02a5373317d745c1571c84aad03321d"

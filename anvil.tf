@@ -139,6 +139,6 @@ module "anvil_aggregatex" {
     db_host = var.postgres_host
     db_username  =var.postgres_db_username
     db_password  =var.postgres_db_password
-    aggregatex_db ="aggregatex2"
+    aggregatex_db ="aggregatex"
     network_label = "anvil"
 }
