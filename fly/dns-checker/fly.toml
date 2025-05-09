@@ -1,0 +1,44 @@
+# fly.toml app configuration file generated for definder on 2023-08-23T11:49:09+04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "dns-checker"
+primary_region = "ams"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[experimental]
+  auto_rollback = true
+
+[env]
+AMQP_ENABLE="1"
+DOMAINS="gearbox.fi,gearbox.finance,gearbox.foundation"
+# DOMAINS="gearbox.fi,gearbox.finance,gearbox.foundation,redstone.finance,redstone.vip"
+IGNORE_ERR_FOR_CNAMES="cname.vercel-dns.com.,hosting.gitbook.io.,gearbox2.hosted-by-discourse.com."
+NO_DNSSEC="risk.gearbox.foundation,dev.gearbox.fi,gov.gearbox.fi,grafana-dev.gearbox.foundation,circulated.gearbox.foundation,docs.gearbox.finance,docs.gearbox.fi,grafana.gearbox.foundation"
+SECS="120"
+APP_NAME="TEST_DNS-MONITOR@H"
+
+[http_service]
+  internal_port = 0
+  auto_stop_machines = false
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+  processes = ["app"]
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  [[services.tcp_checks]]
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "1s"

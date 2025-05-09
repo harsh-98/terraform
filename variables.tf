@@ -79,7 +79,7 @@ variable "mainnet_database" {
   description = "mainnet database"
 }
 variable "mainnet_server_ip" {
-  description = "arbitrum server ip"
+  description = "mainnet server ip"
 }
 variable "arbitrum_database" {
   description = "arbitrum database"
@@ -88,12 +88,30 @@ variable "arbitrum_server_ip" {
   description = "arbitrum server ip"
 }
 variable "optimism_database" {
-  description = "arbitrum database"
+  description = "optimism database"
 }
 variable "optimism_server_ip" {
-  description = "arbitrum server ip"
+  description = "optimism server ip"
+}
+variable "sonic_database" {
+  description = "sonic database"
+}
+variable "sonic_server_ip" {
+  description = "sonic server ip"
+}
+variable "bnbtest_database" {
+  description = "bnbtest database"
+}
+variable "bnbtest_server_ip" {
+  description = "bnbtest server ip"
 }
 
+variable "bnb_database" {
+  description = "bnb database"
+}
+variable "bnb_server_ip" {
+  description = "bnb server ip"
+}
 
 
 

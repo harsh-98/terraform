@@ -12,9 +12,11 @@ testnet_db_password="123Sample"
 anvil_database="tmp_anvil"
 arbtest_database="tmp_arbtest"
 opttest_database="tmp_opttest"
+bnbtest_database="bnb"
 
 
 #
 anvil_server_ip="84.247.174.187"
 arbtest_server_ip="194.163.166.173"
 opttest_server_ip="194.163.166.173"
+bnbtest_server_ip="84.247.174.187"

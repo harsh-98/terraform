@@ -2,7 +2,7 @@
 
 set -e 
 
-FLY_APP=arb-liquidator-v3
+FLY_APP=partial-liquidator-v3
 FILE_PATH=$(realpath `dirname $0`)
 
 cd $FILE_PATH

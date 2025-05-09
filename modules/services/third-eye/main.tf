@@ -40,7 +40,7 @@ resource "null_resource" "third-eye" {
             # "setopt share_history", # not needed
             "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} ${var.app_name} /${var.network_label}",
             "cd ${local.folder}; go build ./cmd/main.go",
-            "migrate -path migrations -database '${local.db_url}' up",
+            ("${var.network_label}" != "anvil") ? "migrate -path migrations -database '${local.db_url}' up" : "ls",
         ]
     }
     # https://www.terraform.io/language/resources/provisioners/connection

@@ -32,10 +32,15 @@ alter database <yourDB> set default_transaction_read_only = off;
 ```
 
 # create read only user
+Connect with user who is superuser or user with grantable privileges.
 ```
  create user readonly_user with encrypted password 'readonly_password';
+<!-- Connect to the database in which table exists. [Most Important] -->
  GRANT CONNECT ON DATABASE gearbox TO readonly_user;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly_user;
-revoke SELECT ON ALL TABLES IN SCHEMA public from readonly_user;
+<!-- revoke SELECT ON ALL TABLES IN SCHEMA public from readonly_user; -->
+
+Then, run the following command : GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO developer;
+
 ```
 -- https://tableplus.com/blog/2018/04/postgresql-how-to-grant-access-to-users.html

@@ -18,9 +18,9 @@ cd ../../../charts_server
 
 #
 if [ "remote" = "$1" ]; then
-    fly deploy  --build-target app --dockerfile docker/Dockerfile.flyio.$FLY_APP  --config ../terraform/fly/$FLY_APP/fly.toml
+    fly deploy --strategy bluegreen --build-target app --dockerfile docker/Dockerfile.flyio.$FLY_APP  --config ../terraform/fly/$FLY_APP/fly.toml
 elif [ "image" =  "$1" ];then
-    fly deploy  --image $IMAGE  --config ../terraform/fly/$FLY_APP/fly.toml
+    fly deploy --strategy bluegreen --image $IMAGE  --config ../terraform/fly/$FLY_APP/fly.toml
 fi 
 
 cd $FILE_PATH

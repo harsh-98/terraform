@@ -12,7 +12,12 @@ ROLLBACK_MAX_BLOCK = "10"
 AMQP_ENABLE = "1"
 APP_NAME = "TEST_ARB_LIQUIDATORV3@H"
 ONE_INCH_BASE_API = "https://api.1inch.io/v5.0/1"
-PORT = "8080"
+APP_PORT = 8080
+LIQ_THRESHOLD = "9995"
+#
+REDSTONE_PORT=8000
+REDSTONE_URL="http://localhost:8000"
+
 [http_service]
 internal_port = 8080
 force_https = true

@@ -14,7 +14,7 @@ resource "null_resource" "app_status" {
     provisioner "remote-exec" {
         inline =[
             # "setopt share_history", # not needed
-            "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} app_status 5lliot/${var.network_label}",
+            "zsh ./config/scripts/clone_or_pull_repo.sh ${var.gh_token} app_status harsh-98/${var.network_label}",
             "cd ${local.folder}; go build ./cmd/main.go"
         ]
     }

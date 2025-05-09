@@ -9,7 +9,7 @@ module "arbitrum_third-eye" {
     #
     pvt_key = var.pvt_key_file
     gh_token = var.gh_token
-    ip_address = var.optimism_server_ip
+    ip_address = var.arbitrum_server_ip
     network_label = "arbitrum"
 }
 
