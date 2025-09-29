@@ -13,9 +13,8 @@ module "bnbtest_third-eye" {
     network_label = "bnbtest"
 }
 
-module "bnbtest-charts_server" {
+module "bnbtest_charts_server" {
     source = "./modules/services/charts_server"
-
     #
     pvt_key = var.pvt_key_file
     gh_token = var.gh_token

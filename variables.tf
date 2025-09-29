@@ -112,6 +112,30 @@ variable "bnb_database" {
 variable "bnb_server_ip" {
   description = "bnb server ip"
 }
+variable "lisk_database" {
+  description = "lisk database"
+}
+variable "lisk_server_ip" {
+  description = "lisk server ip"
+}
+variable "hemibtc_database" {
+  description = "hemibtc database"
+}
+variable "hemibtc_server_ip" {
+  description = "hemibtc server ip"
+}
+variable "etherlink_database" {
+  description = "etherlink database"
+}
+variable "etherlink_server_ip" {
+  description = "etherlink server ip"
+}
+variable "plasma_database" {
+  description = "plasma database"
+}
+variable "plasma_server_ip" {
+  description = "plasma server ip"
+}
 
 
 

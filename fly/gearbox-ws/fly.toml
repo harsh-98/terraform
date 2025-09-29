@@ -24,7 +24,7 @@ kill_timeout = "5s"
   APP_NAME = "TEST_gearbox-ws@H"
 # application
   GB_VERSION_ALLOWED = "2"
-  PORT = "8080"
+  APP_PORT = "[::]:8080"
   STORE_OLD_SNAPS = "1"
 # fly
   PRIMARY_REGION = "ams"

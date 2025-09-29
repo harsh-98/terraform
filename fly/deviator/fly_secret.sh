@@ -1,9 +1,0 @@
-#!/bin/bash
-
-FLY_APP=deviator
-
-
-TERRAFORM_DIR="`dirname $0`/../.."
-source $TERRAFORM_DIR/envs/mainnet/.env.$FLY_APP
-
-flyctl secrets -a $FLY_APP set "ETH_PROVIDER=$ETH_PROVIDER" "WSS_PROVIDER=$WSS_PROVIDER" "CLOUDAMQP_URL=$CLOUDAMQP_URL" "PRIVATE_KEY=$PRIVATE_KEY" "PAUSER_ADDRESS=$PAUSER_ADDRESS"

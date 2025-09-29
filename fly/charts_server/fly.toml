@@ -11,8 +11,9 @@ ENV = "production"
 DAO_ADDRESS = "0x7b065Fcb0760dF0CEA8CFd144e08554F3CeA73D1"
 AMQP_ENABLE = "1"
 CACHING_SEC = "120"
+#CS_STATUS="Maintenance in progress!"
 APP_NAME = "TEST_charts_server"
-# PORT = "8000"
+# APP_PORT = "[::]:8080"
 
 
 [http_service]

@@ -36,12 +36,12 @@ on old primary to join again.
 - sudo systemctl stop postgresql
 <!-- - sudo rm -rf /var/lib/postgresql/16/data -->
 ```
-PRIMARY_IP=37.60.225.176
+PRIMARY_IP=144.91.114.166
 repmgr -h $PRIMARY_IP -U repmgr -d repmgr -f /etc/repmgr.conf standby clone --copy-external-config-files --dry-run
-repmgr -h $PRIMARY_IP -U repmgr -d repmgr -f /etc/repmgr.conf standby clone --copy-external-config-files -F # force
-
+repmgr -h $PRIMARY_IP -U repmgr -d repmgr -f /etc/repmgr.conf standby clone --copy-external-config-files -F --verbose # force
+<!-- repmgr -h $PRIMARY_IP -U repmgr -d repmgr -f /etc/repmgr.conf node rejoin  --verbose -->
 <!-- repmgr -h $PRIMARY_IP -U repmgr -d repmgr -f /etc/repmgr.conf standby clone  -F  --rsync-only   # force -->
-
+<!-- repmgr primary unregister -f /etc/repmgr.conf --node-id=2 -f --> On the field note to re-register in case like is `in active primary and running as standby. `
 --
 ```
 - in the postgresql.conf , change the datafile from if /main to /data.
@@ -54,7 +54,10 @@ repmgr -h $PRIMARY_IP -U repmgr -d repmgr -f /etc/repmgr.conf standby clone --co
 - https://www.linode.com/docs/guides/manage-replication-failover-on-postgresql-cluster-using-repmgr/#how-to-configure-ssh
 - pgx driver in gorm. https://pkg.go.dev/github.com/jackc/pgx/v5@v5.3.1/pgconn#ParseConfig
 - https://github.com/jackc/pgx/discussions/1608
-
+- the wal_keep_segments parameter in PostgreSQL has been renamed to wal_keep_size. Specifies the minimum number of past log file segments kept in the pg_xlog directory. The wal_keep_segments parameter in PostgreSQL controls the minimum number of past WAL (Write-Ahead Log) file segments kept on the primary server for standby servers
+- https://stackoverflow.com/questions/28162021/setting-wal-keep-segments-for-postgresql-hot-standby, "FATAL:  could not receive data from WAL stream: ERROR:  requested WAL segment  has already been removed". 
+- https://github.com/EnterpriseDB/repmgr/issues/659, service postgresql process.
+- https://www.postgresql.org/docs/current/runtime-config-replication.html and wal_keep_size and max_replication_slots 10 for replicas and max_wal_senders 10 server sender processes.
 
 # stopping previous service
 ```

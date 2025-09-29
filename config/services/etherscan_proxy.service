@@ -1,0 +1,12 @@
+[Unit]
+Description="etherscan proxy"
+
+[Service]
+User=debian
+WorkingDirectory=/home/debian/mainnet-app_status/cmd/etherscan_proxy
+ExecStart=/home/debian/mainnet-app_status/cmd/etherscan_proxy/main
+Restart=always
+RestartSec=3 
+
+[Install]
+WantedBy=multi-user.target
